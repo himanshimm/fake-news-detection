@@ -70,8 +70,17 @@ def _esc(s) -> str:
 # ─── 4. CSS ───────────────────────────────────────────────────────────────────
 
 def inject_css() -> None:
+    st.markdown(
+        '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
+        'family=Instrument+Serif:ital@0;1'
+        '&family=JetBrains+Mono:wght@300;400;500'
+        '&family=Space+Grotesk:wght@300;400;500;600;700'
+        '&display=swap">',
+        unsafe_allow_html=True,
+    )
     css_path = Path(__file__).parent / "styles.css"
     css = css_path.read_text(encoding="utf-8") if css_path.exists() else ""
+    css = css.replace("@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');", "")
     extra = """
     .autopsy-wrap { border-top: 1px solid var(--rule); padding: 20px 28px; background: var(--paper); }
     .autopsy-head { font-family: 'JetBrains Mono', monospace; font-size: 11px;
