@@ -60,10 +60,7 @@ st.set_page_config(
 # ─── 3. H() — raw-HTML helper (bypasses CommonMark) ──────────────────────────
 
 def H(s: str) -> None:
-    if hasattr(st, "html"):
-        st.html(s)
-    else:
-        st.markdown(textwrap.dedent(s).lstrip("\n"), unsafe_allow_html=True)
+    st.markdown(textwrap.dedent(s).lstrip("\n"), unsafe_allow_html=True)
 
 
 def _esc(s) -> str:
@@ -351,6 +348,8 @@ def detect_whatsapp_forward(text: str) -> dict:
     return {"score": score, "verdict": verdict, "signals": signals[:4]}
 
 
+_TRUE_RATINGS = {"true", "correct", "accurate", "verified", "real", "right", "legit", "legitimate"}
+
 def fetch_debunked(api_key: str, queries: list, max_each: int = 2) -> list:
     seen, results = set(), []
     for q in queries:
@@ -363,12 +362,16 @@ def fetch_debunked(api_key: str, queries: list, max_each: int = 2) -> list:
             for claim in data.get("claims", []):
                 txt = claim.get("text", "")
                 if not txt or txt in seen: continue
-                seen.add(txt)
                 for review in claim.get("claimReview", [])[:1]:
+                    rating = review.get("textualRating", "")
+                    rating_lower = rating.lower().strip()
+                    if rating_lower in _TRUE_RATINGS:
+                        continue
+                    seen.add(txt)
                     results.append({
                         "claim":    txt,
                         "claimant": claim.get("claimant", "Unknown"),
-                        "rating":   review.get("textualRating", "False"),
+                        "rating":   rating,
                         "source":   review.get("publisher", {}).get("name", "Fact Checker"),
                         "url":      review.get("url", "#"),
                     })
@@ -494,6 +497,16 @@ def render_verdict(raw_text: str, category: str, ocr_used: bool = False) -> None
             result["label"] = "FAKE"; result["fake_prob"] = af
             result["real_prob"] = ar; result["confidence"] = af
 
+    _DEBUNK_WORDS = {"false", "fake", "incorrect", "wrong", "mislead", "misleading",
+                     "pants", "fabricated", "hoax", "inaccurate", "untrue", "debunked"}
+    debunked_fc = [fc for fc in fc_results
+                   if any(w in fc["rating"].lower() for w in _DEBUNK_WORDS)]
+    if debunked_fc and result["label"] == "REAL":
+        result["label"] = "FAKE"
+        result["fake_prob"] = max(result["fake_prob"], 85.0)
+        result["real_prob"] = round(100 - result["fake_prob"], 1)
+        result["confidence"] = result["fake_prob"]
+
     is_fake   = result["label"] == "FAKE"
     conf      = result["confidence"]
     fake_prob = result["fake_prob"]
@@ -501,12 +514,15 @@ def render_verdict(raw_text: str, category: str, ocr_used: bool = False) -> None
 
     word_cls = "is-fake" if is_fake else "is-real"
     word_txt = "Fabricated" if is_fake else "Verified"
-    sub_txt  = (
-        "High confidence — multiple red flags detected." if is_fake and conf >= 75 else
-        "Moderate confidence — verify independently." if conf < 80 else
-        "Low confidence — treat with caution." if conf < 60 else
-        "High confidence — appears credible."
-    )
+    if debunked_fc and is_fake and result.get("fake_prob", 0) >= 85.0:
+        sub_txt = f"Overridden by fact-checkers — debunked by {debunked_fc[0]['source']}."
+    else:
+        sub_txt  = (
+            "High confidence — multiple red flags detected." if is_fake and conf >= 75 else
+            "Moderate confidence — verify independently." if conf < 80 else
+            "Low confidence — treat with caution." if conf < 60 else
+            "High confidence — appears credible."
+        )
 
     signals = [(b["name"], b["detail"], b["level"]) for b in bias_data]
     signals_html = "".join(
