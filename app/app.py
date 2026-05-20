@@ -70,18 +70,25 @@ def _esc(s) -> str:
 # ─── 4. CSS ───────────────────────────────────────────────────────────────────
 
 def inject_css() -> None:
-    st.markdown(
-        '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
-        'family=Instrument+Serif:ital@0;1'
-        '&family=JetBrains+Mono:wght@300;400;500'
-        '&family=Space+Grotesk:wght@300;400;500;600;700'
-        '&display=swap">',
-        unsafe_allow_html=True,
-    )
     css_path = Path(__file__).parent / "styles.css"
     css = css_path.read_text(encoding="utf-8") if css_path.exists() else ""
-    css = css.replace("@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');", "")
     extra = """
+    /* Force Space Grotesk as the base font throughout Streamlit 1.40+ */
+    .stApp, .stApp *, .stMain, .element-container, .stMarkdown, .stMarkdown * {
+        font-family: 'Space Grotesk', sans-serif !important;
+    }
+    /* Re-apply Instrument Serif to everything that needs it */
+    .brand-name, .page-title, .hero-title, .verdict-title,
+    .cat-divider .name, .mast-side .mt, .wb-summary,
+    .emo-head .r, .ap-card .wh, .wb-row .n {
+        font-family: 'Instrument Serif', serif !important;
+    }
+    /* Re-apply JetBrains Mono where needed */
+    .autopsy-head, .emo-head .l, .wb-head, .wb-col .lbl,
+    .page-eyebrow .num, .page-eyebrow .tag, .mast-side,
+    .marquee-track, .fc-num, .fc-meta, .fc-src, .conf-lbl,
+    .signal-row .k, .ap-card .snip, .ap-card .pill,
+    code, pre, .mono { font-family: 'JetBrains Mono', monospace !important; }
     .autopsy-wrap { border-top: 1px solid var(--rule); padding: 20px 28px; background: var(--paper); }
     .autopsy-head { font-family: 'JetBrains Mono', monospace; font-size: 11px;
                     letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; }
