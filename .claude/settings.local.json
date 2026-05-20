@@ -8,7 +8,15 @@
       "Bash(python src/whatsapp_decode.py)",
       "Bash(python -c ' *)",
       "Bash(ls \"C:\\\\Users\\\\himan\\\\Desktop\\\\project_6\\\\fake-news-detector\\\\models\")",
-      "Bash(ls \"C:\\\\Users\\\\himan\\\\Desktop\\\\project_6\\\\fake-news-detector\\\\models\\\\fine_tuned\")"
+      "Bash(ls \"C:\\\\Users\\\\himan\\\\Desktop\\\\project_6\\\\fake-news-detector\\\\models\\\\fine_tuned\")",
+      "Bash(streamlit run *)",
+      "Bash(curl -sS -o nul -w \"HTTP %{http_code}\" http://localhost:8520/)",
+      "PowerShell($proc = Start-Process -FilePath \"python\" -ArgumentList \"-m\",\"streamlit\",\"run\",\"app/app.py\",\"--server.headless\",\"true\",\"--server.port\",\"8520\" -PassThru -RedirectStandardOutput \"streamlit_stdout.log\" -RedirectStandardError \"streamlit_stderr.log\"; Write-Output \"PID: $\\($proc.Id\\)\"; Start-Sleep -Seconds 10; try { $r = Invoke-WebRequest -Uri \"http://localhost:8520/\" -UseBasicParsing -TimeoutSec 5; Write-Output \"HTTP $\\($r.StatusCode\\)\" } catch { Write-Output \"ERR: $\\($_.Exception.Message\\)\" })",
+      "PowerShell(Start-Sleep -Seconds 15; try { $r = Invoke-WebRequest -Uri \"http://localhost:8520/\" -UseBasicParsing -TimeoutSec 5; Write-Output \"HTTP $\\($r.StatusCode\\) bytes=$\\($r.RawContentLength\\)\" } catch { Write-Output \"ERR: $\\($_.Exception.Message\\)\"; if \\(Test-Path \"streamlit_stderr.log\"\\) { Write-Output \"--- stderr ---\"; Get-Content streamlit_stderr.log -Tail 30 } if \\(Test-Path \"streamlit_stdout.log\"\\) { Write-Output \"--- stdout ---\"; Get-Content streamlit_stdout.log -Tail 30 } })",
+      "PowerShell($proc = Start-Process -FilePath \".\\\\venv\\\\Scripts\\\\streamlit.exe\" -ArgumentList \"run\",\"app/app.py\",\"--server.headless\",\"true\",\"--server.port\",\"8520\" -PassThru -RedirectStandardOutput \"streamlit_stdout.log\" -RedirectStandardError \"streamlit_stderr.log\"; Write-Output \"PID: $\\($proc.Id\\)\"; Start-Sleep -Seconds 20; try { $r = Invoke-WebRequest -Uri \"http://localhost:8520/\" -UseBasicParsing -TimeoutSec 5; Write-Output \"HTTP $\\($r.StatusCode\\) bytes=$\\($r.RawContentLength\\)\" } catch { Write-Output \"ERR: $\\($_.Exception.Message\\)\"; if \\(Test-Path \"streamlit_stderr.log\"\\) { Write-Output \"--- stderr ---\"; Get-Content streamlit_stderr.log -Tail 30 } if \\(Test-Path \"streamlit_stdout.log\"\\) { Write-Output \"--- stdout ---\"; Get-Content streamlit_stdout.log -Tail 30 } })",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }

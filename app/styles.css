@@ -348,13 +348,16 @@ section[data-testid="stSidebar"] { display: none !important; }
 
 /* st.tabs styled as brutalist tabs */
 .analyser-frame .stTabs [data-baseweb="tab-list"] {
+  position: static !important;
   background: var(--ink) !important;
   padding: 0 !important;
   gap: 0 !important;
+  border: none !important;
   border-bottom: 1px solid var(--rule) !important;
   display: flex !important;
   flex-wrap: wrap !important;
   margin: 0 !important;
+  box-shadow: none !important;
 }
 .analyser-frame .stTabs [data-baseweb="tab"] {
   font-family: 'JetBrains Mono', monospace !important;
@@ -366,6 +369,7 @@ section[data-testid="stSidebar"] { display: none !important; }
   border: none !important;
   border-right: 1px solid #2a2a2a !important;
   border-bottom: none !important;
+  margin-bottom: 0 !important;
   padding: 16px 22px !important;
   font-weight: 500 !important;
   flex: 1 1 auto !important;
@@ -1438,46 +1442,59 @@ h1, h2, h3, h4, h5, h6,
 }
 .tabs-eyebrow .r b { color: var(--vermil); font-weight: 400; }
 
-/* Make Streamlit's tab list look like brutalist navigation, scoped to the
-   primary tabs only (i.e. NOT inside .analyser-frame which has its own). */
+/* Top-level navigation tabs — editorial section bar, sticky on scroll.
+   Cream-on-cream with ink rules above & below, vermilion underline marks
+   the active section. Scoped to the primary tabs; nested sub-tabs and the
+   analyser-frame's dark tab bar each reset `position: static` below. */
 body .stTabs [data-baseweb="tab-list"] {
-  background: var(--ink) !important;
-  border: 1px solid var(--ink) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 90 !important;
+  background: var(--bone) !important;
+  border: none !important;
+  border-top: 1px solid var(--ink) !important;
+  border-bottom: 1px solid var(--ink) !important;
   padding: 0 !important;
   gap: 0 !important;
   display: flex !important;
   flex-wrap: wrap !important;
-  margin: 0 !important;
+  margin: 0 0 28px 0 !important;
+  box-shadow: 0 8px 14px -10px rgba(0, 0, 0, 0.18);
 }
 body .stTabs [data-baseweb="tab"] {
   flex: 1 1 auto !important;
-  min-width: 130px !important;
-  background: var(--ink) !important;
-  color: var(--bone) !important;
+  min-width: 140px !important;
+  background: transparent !important;
+  color: var(--ink) !important;
   border: none !important;
-  border-right: 1px solid #2a2a2a !important;
-  border-bottom: none !important;
+  border-right: 1px solid var(--rule) !important;
+  border-bottom: 3px solid transparent !important;
   border-radius: 0 !important;
-  padding: 20px 22px !important;
+  margin-bottom: -1px !important;
+  padding: 18px 24px !important;
   font-family: 'JetBrains Mono', monospace !important;
-  font-size: 12px !important;
+  font-size: 11px !important;
   font-weight: 500 !important;
-  letter-spacing: 0.2em !important;
+  letter-spacing: 0.24em !important;
   text-transform: uppercase !important;
   white-space: nowrap !important;
   justify-content: center !important;
-  transition: background 0.15s !important;
+  transition: color 0.18s, background 0.18s, border-color 0.18s !important;
 }
 body .stTabs [data-baseweb="tab"]:last-child { border-right: none !important; }
-body .stTabs [data-baseweb="tab"]:hover { background: #1a1a1a !important; }
+body .stTabs [data-baseweb="tab"]:hover {
+  background: rgba(255, 59, 0, 0.05) !important;
+  color: var(--vermil) !important;
+}
 body .stTabs [data-baseweb="tab"][aria-selected="true"] {
-  background: var(--vermil) !important;
+  background: transparent !important;
   color: var(--ink) !important;
+  font-weight: 600 !important;
+  border-bottom-color: var(--vermil) !important;
 }
 body .stTabs [data-baseweb="tab"][aria-selected="true"]::before {
-  content: '▸ ';
-  color: var(--ink);
-  margin-right: 4px;
+  content: '' !important;
+  margin: 0 !important;
 }
 body .stTabs [data-baseweb="tab-highlight"] { display: none !important; }
 body .stTabs [data-baseweb="tab-panel"] {
@@ -1485,27 +1502,38 @@ body .stTabs [data-baseweb="tab-panel"] {
   padding: 0 !important;
 }
 
-/* Nested (sub-)tabs — slightly smaller, distinguishable from page tabs */
+/* Nested (sub-)tabs — keep prior dark look, but NOT sticky. */
 .stTabs .stTabs [data-baseweb="tab-list"] {
+  position: static !important;
+  background: var(--ink) !important;
+  border: 1px solid var(--ink) !important;
   border-color: #2a2a2a !important;
+  margin: 0 !important;
+  box-shadow: none !important;
 }
 .stTabs .stTabs [data-baseweb="tab"] {
+  background: var(--ink) !important;
+  color: var(--bone) !important;
+  border-right: 1px solid #2a2a2a !important;
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
   min-width: 110px !important;
   padding: 14px 18px !important;
   font-size: 11px !important;
   letter-spacing: 0.18em !important;
 }
+.stTabs .stTabs [data-baseweb="tab"]:hover {
+  background: #1a1a1a !important;
+  color: var(--bone) !important;
+}
+.stTabs .stTabs [data-baseweb="tab"][aria-selected="true"] {
+  background: var(--vermil) !important;
+  color: var(--ink) !important;
+  border-bottom-color: transparent !important;
+}
 .stTabs .stTabs [data-baseweb="tab"][aria-selected="true"]::before {
   content: '' !important;
   margin-right: 0 !important;
-}
-
-/* Sticky page-level tab bar */
-.page-tabs-anchor {
-  position: sticky;
-  top: 0;
-  z-index: 89;
-  background: var(--bone);
 }
 
 /* =====================================================================
