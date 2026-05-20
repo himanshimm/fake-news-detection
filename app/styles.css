@@ -1,0 +1,1878 @@
+/* =====================================================================
+   DECYPHER · BROADSHEET · STREAMLIT EDITION
+   Brutalist editorial — bone / ink / vermilion / yellow
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bone:    #ece4d2;
+  --paper:   #f5efe0;
+  --ink:     #0a0a0a;
+  --ink-2:   #1a1a1a;
+  --dim:     #5a5142;
+  --dim-2:   #8a8170;
+  --vermil:  #ff3b00;
+  --blood:   #c8001e;
+  --blue:    #1c4a8a;
+  --yellow:  #e8c547;
+  --green:   #2b6041;
+  --rule:    #0a0a0a;
+}
+
+* , *::before, *::after { box-sizing: border-box; }
+html, body { background: var(--bone) !important; }
+body, [class*="css"] {
+  font-family: 'Space Grotesk', sans-serif !important;
+  color: var(--ink) !important;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--vermil); color: var(--bone); }
+
+/* ----- Hide Streamlit chrome only — NOT our custom <header>/<footer> ----- */
+#MainMenu,
+header[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"],
+[data-testid="stAppDeployButton"] { display: none !important; }
+section[data-testid="stSidebar"] { display: none !important; }
+.stApp { background: var(--bone) !important; padding: 0 !important; }
+.block-container {
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+.main > .block-container { padding-top: 0 !important; }
+.stSpinner > div { border-top-color: var(--vermil) !important; }
+
+/* ----- Typography helpers ----- */
+.mono { font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+.serif { font-family: 'Instrument Serif', serif; }
+
+/* =====================================================================
+   1. MASTHEAD
+   ===================================================================== */
+.masthead {
+  position: sticky; top: 0;
+  z-index: 90;
+  background: var(--bone);
+  border-bottom: 1px solid var(--rule);
+}
+.mast-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 14px 32px;
+  gap: 18px;
+}
+.mast-left, .mast-right {
+  display: flex; align-items: center; gap: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.mast-right { justify-content: flex-end; }
+.mast-logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.mast-logo em { color: var(--vermil); font-style: italic; }
+.mast-dot {
+  display: inline-block;
+  color: var(--vermil);
+  animation: blink 1.2s steps(2) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.mast-nav { display: flex; gap: 22px; font-size: 11px; }
+.mast-nav a {
+  color: var(--dim);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+}
+.mast-nav a:hover { color: var(--ink); }
+.weather {
+  display: flex; align-items: center; gap: 8px;
+}
+.weather .sw-mini { width: 10px; height: 10px; background: var(--vermil); border-radius: 50%; }
+
+/* ----- Marquee ----- */
+.marquee {
+  background: var(--ink);
+  color: var(--bone);
+  overflow: hidden;
+  border-bottom: 1px solid var(--rule);
+  padding: 10px 0;
+}
+.marquee-track {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 38s linear infinite;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.marquee-track span { padding-right: 48px; }
+.marquee-track span b { color: var(--vermil); font-weight: 400; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* =====================================================================
+   2. HERO
+   ===================================================================== */
+.hero {
+  padding: 56px 32px 60px;
+  border-bottom: 1px solid var(--rule);
+}
+.hero-grid {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 48px;
+  align-items: end;
+}
+.hero-headline {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(64px, 11vw, 188px);
+  line-height: 0.86;
+  letter-spacing: -0.025em;
+}
+.hero-headline .or { font-style: italic; color: var(--dim); font-size: 0.7em; padding: 0 0.08em; }
+.hero-headline .fab { position: relative; display: inline-block; }
+.hero-headline .fab::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 52%;
+  height: 6px; background: var(--vermil);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: strike 1s 1.3s cubic-bezier(.2,.8,.2,1) forwards;
+}
+@keyframes strike { to { transform: scaleX(1); } }
+.hero-headline .real { color: var(--vermil); }
+.hero-meta { display: flex; flex-direction: column; gap: 20px; }
+.hero-meta .stamp {
+  border: 1px solid var(--ink);
+  padding: 18px 18px 16px;
+  background: var(--paper);
+}
+.hero-meta .stamp.dark { background: var(--ink); color: var(--bone); border-color: var(--ink); }
+.hero-meta .stamp .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+.hero-meta .stamp.dark .label { color: var(--dim-2); }
+.hero-meta .stamp .body {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.25;
+}
+.hero-meta .stamp .body b {
+  font-weight: 400;
+  font-style: normal;
+  background: var(--ink);
+  color: var(--bone);
+  padding: 1px 6px;
+}
+.hero-meta .stamp.dark .body b {
+  background: var(--vermil); color: var(--ink);
+}
+.hero-foot {
+  max-width: 1320px;
+  margin: 56px auto 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: center;
+  border-top: 1px solid var(--rule);
+  padding-top: 22px;
+}
+.hero-foot .lede {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.35;
+  max-width: 520px;
+}
+.hero-foot .scroll-down {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+  display: flex; align-items: center; gap: 8px;
+  justify-content: center;
+}
+.hero-foot .scroll-down .arr { animation: bob 1.4s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(4px); } }
+.hero-foot .price {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.hero-foot .price b { color: var(--ink); font-weight: 400; }
+
+/* =====================================================================
+   3. SECTIONS
+   ===================================================================== */
+.spread {
+  border-bottom: 1px solid var(--rule);
+  padding: 72px 32px;
+}
+.spread.bg-paper { background: var(--paper); }
+.spread-inner { max-width: 1320px; margin: 0 auto; }
+.spread-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 44px;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 22px;
+}
+.section-no {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.section-no b { color: var(--vermil); font-weight: 400; }
+.section-title {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(38px, 5vw, 76px);
+  line-height: 0.96;
+  letter-spacing: -0.018em;
+  margin: 0;
+}
+.section-title em { font-style: italic; color: var(--vermil); }
+.section-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-align: right;
+}
+
+/* =====================================================================
+   4. STATS
+   ===================================================================== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+.stat {
+  padding: 28px 24px 26px;
+  border-right: 1px solid var(--rule);
+}
+.stat:last-child { border-right: none; }
+.stat .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 14px;
+}
+.stat .num {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(56px, 6vw, 92px);
+  line-height: 0.9;
+  font-weight: 400;
+  color: var(--ink);
+}
+.stat .num.accent { color: var(--vermil); }
+.stat .num small { font-size: 0.45em; vertical-align: super; color: var(--dim); font-style: italic; }
+.stat .ctx {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--dim);
+  margin-top: 12px;
+}
+.stat .src {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim-2);
+  margin-top: 14px;
+}
+.stats-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--rule);
+  border-top: none;
+  padding: 14px 24px;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.stats-foot b { color: var(--vermil); font-weight: 400; }
+
+/* =====================================================================
+   5. ANALYSER — STREAMLIT WIDGETS
+   ===================================================================== */
+.analyser-frame {
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+.analyser-cat-head {
+  background: var(--ink);
+  color: var(--bone);
+  padding: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* st.tabs styled as brutalist tabs */
+.analyser-frame .stTabs [data-baseweb="tab-list"] {
+  background: var(--ink) !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  border-bottom: 1px solid var(--rule) !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  margin: 0 !important;
+}
+.analyser-frame .stTabs [data-baseweb="tab"] {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--bone) !important;
+  background: var(--ink) !important;
+  border: none !important;
+  border-right: 1px solid #2a2a2a !important;
+  border-bottom: none !important;
+  padding: 16px 22px !important;
+  font-weight: 500 !important;
+  flex: 1 1 auto !important;
+  min-width: 100px !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  transition: background 0.15s !important;
+}
+.analyser-frame .stTabs [data-baseweb="tab"]:hover { background: #1a1a1a !important; }
+.analyser-frame .stTabs [data-baseweb="tab"][aria-selected="true"] {
+  background: var(--vermil) !important;
+  color: var(--ink) !important;
+}
+.analyser-frame .stTabs [data-baseweb="tab-highlight"] { display: none !important; }
+.analyser-frame .stTabs [data-baseweb="tab-panel"] {
+  background: var(--paper) !important;
+  padding: 36px 36px 28px !important;
+}
+
+/* textarea inside analyser */
+.analyser-frame .stTextArea textarea {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--ink) !important;
+  border-radius: 0 !important;
+  font-family: 'Instrument Serif', serif !important;
+  font-style: italic !important;
+  font-size: 26px !important;
+  line-height: 1.32 !important;
+  color: var(--ink) !important;
+  padding: 12px 0 14px !important;
+  caret-color: var(--vermil) !important;
+  outline: none !important;
+  box-shadow: none !important;
+  resize: none !important;
+  min-height: 130px !important;
+}
+.analyser-frame .stTextArea textarea::placeholder { color: var(--dim-2) !important; opacity: 1 !important; }
+.analyser-frame .stTextArea textarea:focus {
+  border-bottom-color: var(--vermil) !important;
+  box-shadow: none !important;
+}
+.analyser-frame label { display: none !important; }
+
+/* file uploader inside analyser */
+.analyser-frame [data-testid="stFileUploader"] {
+  border: 1px dashed var(--ink);
+  background: var(--bone);
+  padding: 18px;
+}
+.analyser-frame [data-testid="stFileUploader"] section {
+  background: transparent !important;
+  border: none !important;
+  padding: 12px !important;
+}
+.analyser-frame [data-testid="stFileUploader"] section small {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+  color: var(--dim) !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+}
+.analyser-frame [data-testid="stFileUploader"] button {
+  background: var(--ink) !important;
+  color: var(--bone) !important;
+  border: 1px solid var(--ink) !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  padding: 8px 14px !important;
+}
+
+.cat-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 18px;
+}
+.cat-meta .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.cat-meta .lbl b { color: var(--vermil); font-weight: 400; }
+.cat-meta .meta-r {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 0.16em;
+}
+
+.analyser-foot {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  margin-top: 4px;
+  padding: 22px 36px;
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+.lang-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.lang-pills .pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--dim-2);
+  color: var(--dim);
+}
+.lang-pills .pill.is-on { background: var(--ink); color: var(--bone); border-color: var(--ink); }
+
+/* Run button */
+.analyser-frame .stButton > button {
+  background: var(--vermil) !important;
+  color: var(--ink) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  border: 1px solid var(--ink) !important;
+  border-radius: 0 !important;
+  padding: 18px 32px !important;
+  transition: transform 0.15s, box-shadow 0.15s !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+.analyser-frame .stButton > button:hover {
+  background: var(--vermil) !important;
+  color: var(--ink) !important;
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 4px 4px 0 var(--ink) !important;
+}
+.analyser-frame .stButton > button:focus { box-shadow: 4px 4px 0 var(--ink) !important; }
+.analyser-frame .stButton > button:active { transform: translate(0, 0) !important; box-shadow: none !important; }
+
+/* =====================================================================
+   6. VERDICT
+   ===================================================================== */
+.verdict {
+  margin-top: 32px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  animation: rise 0.5s ease both;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+.verdict-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  border-bottom: 1px solid var(--rule);
+  background: var(--ink);
+  color: var(--bone);
+}
+.verdict-hero .left { padding: 32px 36px 30px; }
+.verdict-hero .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim-2);
+  margin-bottom: 14px;
+}
+.verdict-hero .word {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(64px, 10vw, 144px);
+  line-height: 0.9;
+  font-style: italic;
+}
+.verdict-hero .word.is-fake { color: var(--vermil); }
+.verdict-hero .word.is-real { color: var(--yellow); }
+.verdict-hero .sub {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  color: var(--bone);
+  margin-top: 10px;
+  opacity: 0.65;
+}
+.verdict-hero .right {
+  padding: 28px 28px;
+  border-left: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+  background: var(--ink);
+  min-width: 200px;
+}
+.conf-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 96px;
+  line-height: 0.9;
+  color: var(--bone);
+}
+.conf-num small { font-size: 30px; color: var(--dim-2); }
+.conf-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim-2);
+}
+
+.verdict-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.vg-cell {
+  padding: 22px 28px 24px;
+  border-right: 1px solid var(--rule);
+}
+.vg-cell:last-child { border-right: none; }
+.vg-cell .l {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+.vg-cell .b {
+  height: 6px;
+  background: var(--bone);
+  border: 1px solid var(--ink);
+  position: relative;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.vg-cell .b .fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  animation: grow 1s cubic-bezier(.2,.8,.2,1) forwards;
+  transform-origin: left;
+}
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.vg-cell.is-fake .b .fill { background: var(--vermil); }
+.vg-cell.is-real .b .fill { background: var(--green); }
+.vg-cell .n {
+  font-family: 'Instrument Serif', serif;
+  font-size: 56px;
+  line-height: 0.9;
+}
+.vg-cell.is-fake .n { color: var(--vermil); }
+.vg-cell.is-real .n { color: var(--green); }
+.vg-cell .n small { font-size: 18px; color: var(--dim); vertical-align: top; margin-left: 4px; }
+
+.signal-list { border-top: 1px solid var(--rule); }
+.signal-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 130px;
+  gap: 24px;
+  padding: 14px 28px;
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+}
+.signal-row:last-child { border-bottom: none; }
+.signal-row .k {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.signal-row .v {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink);
+}
+.signal-row .flag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  text-align: center;
+  border: 1px solid;
+}
+.flag.f-high { color: var(--vermil); border-color: var(--vermil); background: rgba(255,59,0,.08); }
+.flag.f-med  { color: #b87000; border-color: #b87000; background: rgba(184,112,0,.08); }
+.flag.f-low  { color: var(--green); border-color: var(--green); background: rgba(43,96,65,.08); }
+.flag.f-none { color: var(--dim); border-color: var(--dim-2); }
+
+.trans-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(255,59,0,0.08);
+  color: var(--vermil);
+  border: 1px solid var(--vermil);
+  padding: 5px 12px;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+/* =====================================================================
+   7. PIPELINE
+   ===================================================================== */
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+.pipe-step {
+  padding: 28px 22px 26px;
+  border-right: 1px solid var(--rule);
+  position: relative;
+}
+.pipe-step:last-child { border-right: none; }
+.pipe-step .step-no {
+  font-family: 'Instrument Serif', serif;
+  font-size: 80px;
+  line-height: 0.9;
+  color: var(--vermil);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.pipe-step .step-t {
+  font-family: 'Instrument Serif', serif;
+  font-size: 26px;
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+.pipe-step .step-b {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+/* =====================================================================
+   8. TIMELINE / INCIDENTS
+   ===================================================================== */
+.timeline { position: relative; padding: 12px 0 4px; }
+.timeline::before {
+  content: ''; position: absolute;
+  left: 200px; top: 0; bottom: 0;
+  width: 1px; background: var(--ink);
+}
+.t-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 36px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  align-items: start;
+}
+.t-row:last-child { border-bottom: none; }
+.t-row::before {
+  content: ''; position: absolute;
+  left: 196px; top: 30px;
+  width: 9px; height: 9px;
+  background: var(--vermil);
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+}
+.t-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.t-date b { color: var(--ink); font-weight: 400; }
+.t-body { padding-left: 32px; }
+.t-h {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.t-h em { font-style: italic; color: var(--vermil); }
+.t-d {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  color: var(--dim);
+  line-height: 1.55;
+  margin-bottom: 8px;
+  max-width: 720px;
+}
+.t-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.t-tags .pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+}
+.t-tags .pill.dead { background: var(--ink); color: var(--bone); }
+.t-tags .pill.crit { background: var(--vermil); color: var(--bone); border-color: var(--vermil); }
+
+/* =====================================================================
+   9. VERSUS
+   ===================================================================== */
+.versus {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  align-items: stretch;
+  border: 1px solid var(--rule);
+}
+.vs-card { padding: 36px 32px; background: var(--paper); }
+.vs-card.right { background: var(--ink); color: var(--bone); }
+.vs-card .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 14px;
+}
+.vs-card.right .lbl { color: var(--dim-2); }
+.vs-card .who {
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: 22px;
+}
+.vs-card .who em { font-style: italic; color: var(--vermil); }
+.vs-acc {
+  font-family: 'Instrument Serif', serif;
+  font-size: 120px;
+  line-height: 0.9;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.vs-card.right .vs-acc { color: var(--vermil); }
+.vs-acc small { font-size: 36px; color: var(--dim); }
+.vs-card.right .vs-acc small { color: var(--dim-2); }
+.vs-card .desc {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--dim);
+  max-width: 380px;
+}
+.vs-card.right .desc { color: #b8b0a0; }
+.vs-mid {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--vermil);
+  color: var(--ink);
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 64px;
+  border-left: 1px solid var(--ink);
+  border-right: 1px solid var(--ink);
+}
+.vs-mid small {
+  font-family: 'JetBrains Mono', monospace;
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* =====================================================================
+   10. CASES
+   ===================================================================== */
+.cases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--rule);
+}
+.case {
+  padding: 28px 26px 30px;
+  border-right: 1px solid var(--rule);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+}
+.case:last-child { border-right: none; }
+.case .meta {
+  display: flex; justify-content: space-between;
+  margin-bottom: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.case .meta .loc { color: var(--vermil); }
+.case h4 {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.05;
+  margin-bottom: 14px;
+}
+.case h4 em { font-style: italic; }
+.case p {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.case .toll {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.case .toll .n {
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px;
+  line-height: 0.9;
+  color: var(--vermil);
+}
+.case .toll .l {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-align: right;
+}
+
+/* =====================================================================
+   11. VIRAL FEED
+   ===================================================================== */
+.feed { border: 1px solid var(--rule); }
+.feed-card {
+  display: grid;
+  grid-template-columns: 110px 1fr 280px;
+  gap: 28px;
+  padding: 26px 28px 28px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  align-items: start;
+}
+.feed-card:last-child { border-bottom: none; }
+.feed-card:hover { background: var(--bone); }
+.fc-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 64px;
+  line-height: 0.9;
+  color: var(--vermil);
+  font-style: italic;
+}
+.fc-meta {
+  display: flex; gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+.fc-meta .plat { border: 1px solid var(--ink); padding: 3px 8px; color: var(--ink); }
+.fc-claim {
+  font-family: 'Instrument Serif', serif;
+  font-size: 26px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+.fc-claim::before { content: '“'; color: var(--vermil); }
+.fc-claim::after { content: '”'; color: var(--vermil); }
+.fc-truth {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--dim);
+}
+.fc-truth b { color: var(--ink); font-weight: 500; }
+.fc-side {
+  border-left: 1px solid var(--rule);
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.fc-flag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  width: fit-content;
+}
+.fc-flag.false { background: var(--vermil); color: var(--bone); }
+.fc-flag.mislead { background: var(--yellow); color: var(--ink); }
+.fc-stat { display: flex; flex-direction: column; gap: 4px; }
+.fc-stat .l {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.fc-stat .n {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--ink);
+}
+.fc-stat .n.acc { color: var(--vermil); }
+.fc-src {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: auto;
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
+}
+.fc-src b { color: var(--green); font-weight: 400; }
+
+/* fact-check rows (inline in verdict) */
+.fc-wrap { border-top: 1px solid var(--rule); }
+.fc-head {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 14px 28px 6px;
+}
+.fc-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  padding: 12px 28px;
+  border-top: 1px solid var(--rule);
+  align-items: baseline;
+}
+.fc-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.fc-text {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink);
+}
+.fc-text::before { content: '“'; color: var(--vermil); }
+.fc-text::after { content: '”'; color: var(--vermil); }
+.fc-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vermil) !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+/* =====================================================================
+   12. SOURCE TABLE
+   ===================================================================== */
+.src-table-wrap { border: 1px solid var(--rule); overflow-x: auto; }
+.src-table { width: 100%; border-collapse: collapse; }
+.src-table thead { background: var(--ink); color: var(--bone); }
+.src-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 14px 18px;
+  font-weight: 400;
+}
+.src-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--rule);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  background: var(--paper);
+  vertical-align: middle;
+}
+.src-table tr:last-child td { border-bottom: none; }
+.src-table tr:hover td { background: var(--bone); }
+.src-rank {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--vermil);
+  width: 50px;
+}
+.src-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  line-height: 1.1;
+}
+.src-bar {
+  display: flex; align-items: center; gap: 10px;
+  width: 220px;
+}
+.src-bar .track {
+  flex: 1; height: 4px; background: var(--bone); border: 1px solid var(--ink); position: relative;
+}
+.src-bar .fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+}
+.fill-hi { background: var(--green); }
+.fill-md { background: var(--yellow); }
+.fill-lo { background: var(--vermil); }
+.src-score-n {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--ink);
+  min-width: 28px;
+  text-align: right;
+}
+.lean-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--ink);
+  color: var(--ink) !important;
+  background: var(--bone);
+  display: inline-block;
+}
+
+/* Selectbox styling for filters */
+.stSelectbox > div > div {
+  background: var(--paper) !important;
+  border: 1px solid var(--ink) !important;
+  border-radius: 0 !important;
+  color: var(--ink) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+}
+.stSelectbox label {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  color: var(--dim) !important;
+}
+
+/* =====================================================================
+   13. FAQ (st.expander)
+   ===================================================================== */
+.faq-section .streamlit-expanderHeader,
+.faq-section [data-testid="stExpander"] details > summary {
+  background: var(--paper) !important;
+  border: 1px solid var(--rule) !important;
+  border-radius: 0 !important;
+  padding: 22px 28px !important;
+  font-family: 'Instrument Serif', serif !important;
+  font-size: 24px !important;
+  line-height: 1.2 !important;
+  color: var(--ink) !important;
+  font-weight: 400 !important;
+}
+.faq-section details {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-bottom: none !important;
+}
+.faq-section details:last-child { border-bottom: 1px solid var(--rule) !important; }
+.faq-section [data-testid="stExpander"] {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 0 !important;
+  margin-bottom: -1px;
+}
+.faq-section [data-testid="stExpanderDetails"] {
+  background: var(--paper) !important;
+  padding: 0 28px 24px 28px !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+}
+
+/* =====================================================================
+   14. FOOTER
+   ===================================================================== */
+.foot {
+  background: var(--ink);
+  color: var(--bone);
+  padding: 60px 32px 24px;
+  border-top: 1px solid var(--rule);
+}
+.foot-inner { max-width: 1320px; margin: 0 auto; }
+.foot-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  border-bottom: 1px solid #2a2a2a;
+  padding-bottom: 36px;
+  margin-bottom: 24px;
+}
+.foot-logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 100px;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+.foot-logo em { color: var(--vermil); font-style: italic; }
+.foot-tag {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: #bdb8a8;
+  margin-top: 14px;
+  max-width: 460px;
+}
+.foot-col h5 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim-2);
+  margin-bottom: 14px;
+  font-weight: 400;
+}
+.foot-col a {
+  display: block;
+  font-family: 'Instrument Serif', serif;
+  font-size: 20px;
+  padding: 4px 0;
+  color: var(--bone) !important;
+  text-decoration: none !important;
+  transition: color 0.15s, transform 0.15s;
+}
+.foot-col a:hover { color: var(--vermil) !important; transform: translateX(4px); }
+.foot-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim-2);
+}
+
+/* =====================================================================
+   15. RESPONSIVE
+   ===================================================================== */
+@media (max-width: 1100px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .stat:nth-child(2) { border-right: none; }
+  .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--rule); }
+  .pipeline { grid-template-columns: 1fr 1fr; }
+  .pipe-step { border-bottom: 1px solid var(--rule); }
+  .pipe-step:nth-child(2n) { border-right: none; }
+  .pipe-step:last-child { grid-column: 1 / -1; border-bottom: none; }
+  .cases { grid-template-columns: 1fr; }
+  .case { border-right: none; border-bottom: 1px solid var(--rule); min-height: auto; }
+  .case:last-child { border-bottom: none; }
+  .feed-card { grid-template-columns: 1fr; }
+  .fc-side { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 14px; flex-direction: row; flex-wrap: wrap; gap: 18px; }
+  .versus { grid-template-columns: 1fr; }
+  .vs-mid { border-left: none; border-right: none; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 16px; font-size: 36px; }
+  .timeline::before { left: 8px; }
+  .t-row { grid-template-columns: 1fr; gap: 8px; padding-left: 32px; }
+  .t-row::before { left: 4px; top: 28px; }
+  .t-body { padding-left: 0; }
+  .verdict-hero { grid-template-columns: 1fr; }
+  .verdict-hero .right { border-left: none; border-top: 1px solid #2a2a2a; flex-direction: row; align-items: baseline; gap: 14px; }
+  .foot-top { grid-template-columns: 1fr; gap: 28px; }
+  .foot-logo { font-size: 64px; }
+  .mast-left { display: none; }
+}
+@media (max-width: 700px) {
+  .mast-row { grid-template-columns: 1fr auto; padding: 12px 18px; }
+  .hero { padding: 28px 18px 40px; }
+  .spread { padding: 48px 18px; }
+  .spread-head { grid-template-columns: 1fr; }
+  .section-tag { text-align: left; }
+  .analyser-frame .stTabs [data-baseweb="tab-panel"] { padding: 22px 20px !important; }
+  .analyser-frame .stTextArea textarea { font-size: 19px !important; }
+  .analyser-foot { grid-template-columns: 1fr; padding: 18px 20px; }
+  .stats-row { grid-template-columns: 1fr; }
+  .stat { border-right: none; border-bottom: 1px solid var(--rule); }
+  .stat:last-child { border-bottom: none; }
+  .signal-row { grid-template-columns: 1fr; gap: 6px; padding: 14px 20px; }
+  .src-table th:nth-child(4), .src-table td:nth-child(4) { display: none; }
+  .src-bar { width: 120px; }
+  .src-name { font-size: 17px; }
+  .pipeline { grid-template-columns: 1fr; }
+  .pipe-step { border-right: none; border-bottom: 1px solid var(--rule); }
+  .pipe-step:last-child { border-bottom: none; }
+  .verdict-hero .left { padding: 22px 22px 20px; }
+  .verdict-hero .word { font-size: clamp(52px, 16vw, 78px); }
+  .conf-num { font-size: 64px; }
+  .vg-cell .n { font-size: 38px; }
+  .vs-acc { font-size: 72px; }
+  .foot-logo { font-size: 48px; }
+}
+
+/* =====================================================================
+   16. OVERRIDES — kill Streamlit's default heading colors,
+       tighten widget margins, promote top-level tabs.
+   ===================================================================== */
+
+/* Hard-pin every heading / display element to ink (#0a0a0a).
+   Streamlit's theme injects a fallback color that wins without !important. */
+h1, h2, h3, h4, h5, h6,
+.hero-headline,
+.section-title,
+.pipe-step .step-t,
+.t-h, .case h4,
+.fc-claim, .src-name,
+.stat .num,
+.who, .vs-acc {
+  color: var(--ink) !important;
+}
+.hero-headline .real,
+.section-title em,
+.t-h em, .case h4 em, .who em,
+.stat .num.accent,
+.pipe-step .step-no,
+.fc-num, .case .toll .n {
+  color: var(--vermil) !important;
+}
+.hero-headline .or { color: var(--dim) !important; }
+
+/* Dark-bg headings keep their assigned light color */
+.verdict-hero .word.is-fake { color: var(--vermil) !important; }
+.verdict-hero .word.is-real { color: var(--yellow) !important; }
+.verdict-hero .label,
+.verdict-hero .sub { color: var(--bone) !important; opacity: 0.8; }
+.conf-num { color: var(--bone) !important; }
+.vs-card.right .who,
+.vs-card.right .desc { color: var(--bone) !important; }
+.foot-col a,
+.foot-logo,
+.foot-tag,
+.foot-bottom > div { color: var(--bone) !important; }
+.foot-logo em { color: var(--vermil) !important; }
+.mast-logo,
+.mast-logo em { color: var(--ink) !important; }
+
+/* Body text in stamps / cards — ensure dark on cream */
+.hero-meta .stamp .body,
+.hero-foot .lede,
+.fc-truth,
+.case p,
+.t-d, .stat .ctx,
+.pipe-step .step-b { color: var(--ink) !important; }
+.hero-meta .stamp.dark .body { color: var(--bone) !important; }
+.hero-meta .stamp.dark .body b {
+  background: var(--vermil) !important;
+  color: var(--ink) !important;
+}
+
+/* Streamlit text-area: kill the outer container's padding/margin
+   that was throwing the box around the textarea. */
+[data-testid="stTextArea"],
+[data-testid="stTextInput"],
+[data-testid="stFileUploader"] {
+  padding: 0 !important;
+  margin: 0 0 14px 0 !important;
+}
+[data-testid="stTextArea"] > div,
+[data-testid="stTextInput"] > div {
+  padding: 0 !important;
+  background: transparent !important;
+}
+[data-testid="stTextArea"] label,
+[data-testid="stTextInput"] label,
+[data-testid="stFileUploader"] label {
+  display: none !important;
+}
+[data-testid="stTextArea"] textarea {
+  background: var(--bone) !important;
+  border: 1px solid var(--ink) !important;
+  border-radius: 0 !important;
+  color: var(--ink) !important;
+  caret-color: var(--vermil) !important;
+  font-family: 'Instrument Serif', serif !important;
+  font-style: italic !important;
+  font-size: 22px !important;
+  line-height: 1.4 !important;
+  padding: 18px 20px !important;
+  outline: none !important;
+  box-shadow: none !important;
+  resize: vertical !important;
+  min-height: 140px !important;
+}
+[data-testid="stTextArea"] textarea:focus {
+  border-color: var(--vermil) !important;
+  box-shadow: inset 0 0 0 1px var(--vermil) !important;
+}
+[data-testid="stTextArea"] textarea::placeholder {
+  color: var(--dim-2) !important;
+  opacity: 1 !important;
+  font-style: italic;
+}
+
+/* Container holding the input area inside a tab — same 1080px column as the page */
+.input-frame {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: none;
+  padding: 28px 36px 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.input-frame > .cat-meta { margin-bottom: 16px; }
+
+/* All widgets inside a tab panel match the 1080px column */
+[data-baseweb="tab-panel"] [data-testid="stTextArea"],
+[data-baseweb="tab-panel"] [data-testid="stTextInput"],
+[data-baseweb="tab-panel"] [data-testid="stFileUploader"],
+[data-baseweb="tab-panel"] .stButton,
+[data-baseweb="tab-panel"] [data-testid="stCaptionContainer"],
+[data-baseweb="tab-panel"] [data-testid="stHorizontalBlock"],
+[data-baseweb="tab-panel"] [data-testid="stExpander"],
+[data-baseweb="tab-panel"] [data-testid="stAlert"],
+[data-baseweb="tab-panel"] [data-testid="stVegaLiteChart"] {
+  max-width: 1080px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+[data-baseweb="tab-panel"] .stButton { margin-top: 12px !important; }
+[data-baseweb="tab-panel"] [data-testid="stCaptionContainer"] { margin-top: 4px !important; }
+
+/* The textarea itself can stretch to the full input-frame inner width */
+[data-baseweb="tab-panel"] [data-testid="stTextArea"] textarea {
+  width: 100% !important;
+}
+
+/* =====================================================================
+   17. PRIMARY TABS — top-level analyser tabs (after marquee).
+       Bigger than the nested-tabs we had inside .analyser-frame.
+   ===================================================================== */
+.tabs-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 28px 32px 0;
+}
+.tabs-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 18px;
+}
+.tabs-eyebrow .l {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.tabs-eyebrow .l em { font-style: italic; color: var(--vermil); }
+.tabs-eyebrow .r {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.tabs-eyebrow .r b { color: var(--vermil); font-weight: 400; }
+
+/* Make Streamlit's tab list look like brutalist navigation, scoped to the
+   primary tabs only (i.e. NOT inside .analyser-frame which has its own). */
+body .stTabs [data-baseweb="tab-list"] {
+  background: var(--ink) !important;
+  border: 1px solid var(--ink) !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  margin: 0 !important;
+}
+body .stTabs [data-baseweb="tab"] {
+  flex: 1 1 auto !important;
+  min-width: 130px !important;
+  background: var(--ink) !important;
+  color: var(--bone) !important;
+  border: none !important;
+  border-right: 1px solid #2a2a2a !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  padding: 20px 22px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  justify-content: center !important;
+  transition: background 0.15s !important;
+}
+body .stTabs [data-baseweb="tab"]:last-child { border-right: none !important; }
+body .stTabs [data-baseweb="tab"]:hover { background: #1a1a1a !important; }
+body .stTabs [data-baseweb="tab"][aria-selected="true"] {
+  background: var(--vermil) !important;
+  color: var(--ink) !important;
+}
+body .stTabs [data-baseweb="tab"][aria-selected="true"]::before {
+  content: '▸ ';
+  color: var(--ink);
+  margin-right: 4px;
+}
+body .stTabs [data-baseweb="tab-highlight"] { display: none !important; }
+body .stTabs [data-baseweb="tab-panel"] {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Nested (sub-)tabs — slightly smaller, distinguishable from page tabs */
+.stTabs .stTabs [data-baseweb="tab-list"] {
+  border-color: #2a2a2a !important;
+}
+.stTabs .stTabs [data-baseweb="tab"] {
+  min-width: 110px !important;
+  padding: 14px 18px !important;
+  font-size: 11px !important;
+  letter-spacing: 0.18em !important;
+}
+.stTabs .stTabs [data-baseweb="tab"][aria-selected="true"]::before {
+  content: '' !important;
+  margin-right: 0 !important;
+}
+
+/* Sticky page-level tab bar */
+.page-tabs-anchor {
+  position: sticky;
+  top: 0;
+  z-index: 89;
+  background: var(--bone);
+}
+
+/* =====================================================================
+   18. MAGAZINE MASTHEAD — editorial layout
+       [TIME]  [DECYPHER (centered, big)]  [DATE · TEMP]
+   ===================================================================== */
+.mast-row.magazine {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 26px 44px 22px !important;
+  gap: 40px;
+}
+.mast-side {
+  display: flex;
+  flex-direction: column;
+  font-family: 'JetBrains Mono', monospace;
+  gap: 4px;
+}
+.mast-side.right { align-items: flex-end; text-align: right; }
+.mast-side .ml {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.mast-side .mt {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--ink) !important;
+  line-height: 1.1;
+}
+.mast-side .ms {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+}
+.mast-brand { text-align: center; }
+.brand-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(38px, 4.6vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink) !important;
+  margin: 0;
+  font-weight: 400;
+}
+.brand-name em {
+  color: var(--vermil) !important;
+  font-style: italic;
+}
+.brand-tagline {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--dim);
+  margin-top: 8px;
+  letter-spacing: 0.01em;
+}
+/* Hide the legacy nav links — tabs now do the navigation */
+.mast-nav { display: none !important; }
+
+@media (max-width: 760px) {
+  .mast-row.magazine {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 20px 24px !important;
+    text-align: center;
+  }
+  .mast-side, .mast-side.right { align-items: center; text-align: center; }
+  .brand-name { font-size: clamp(40px, 13vw, 60px); }
+}
+
+/* =====================================================================
+   19. SUB-TABS WIDTH CONSTRAINT
+       Nested st.tabs inside a tab-panel should match the 1080px column.
+   ===================================================================== */
+[data-baseweb="tab-panel"] .stTabs {
+  max-width: 1080px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* =====================================================================
+   20. CATEGORY DIVIDER for viral feed
+   ===================================================================== */
+.cat-divider {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: 1080px;
+  margin: 36px auto 14px auto;
+  padding: 0 12px 12px 12px;
+  border-bottom: 1px solid var(--ink);
+}
+.cat-divider .name {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: clamp(22px, 2.4vw, 32px);
+  color: var(--ink) !important;
+}
+.cat-divider .name em { color: var(--vermil) !important; font-style: italic; }
+.cat-divider .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.cat-divider .count b { color: var(--vermil); font-weight: 400; }
+
+/* Viral feed cards inside a tab — constrain to column */
+[data-baseweb="tab-panel"] .feed {
+  max-width: 1080px;
+  margin: 0 auto 12px auto;
+}
+
+/* =====================================================================
+   21. INPUT-FRAME — now standalone, full border
+   ===================================================================== */
+.input-frame { border: 1px solid var(--rule) !important; }
+
+/* =====================================================================
+   22. STREAMLIT CONTAINER RESETS — kill default padding leaking in
+   ===================================================================== */
+.main .block-container,
+[data-testid="stMainBlockContainer"],
+[data-testid="stAppViewContainer"] > .main > .block-container {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 100% !important;
+}
+[data-baseweb="tab-panel"] [data-testid="element-container"] {
+  margin-bottom: 6px !important;
+}
+[data-baseweb="tab-panel"] [data-testid="stVerticalBlock"] {
+  gap: 0 !important;
+}
+
+/* =====================================================================
+   23. EVERYTHING-ELSE PAGE — vertical section spacing
+   ===================================================================== */
+.combo-section {
+  max-width: 1080px;
+  margin: 0 auto 64px auto;
+  padding: 0 32px;
+  box-sizing: border-box;
+}
+.combo-section .page-eyebrow,
+.combo-section .page-title {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: none !important;
+}
+
+/* =====================================================================
+   24. POLISH — overflow guards, hover stability, scrollbar
+   ===================================================================== */
+html, body { overflow-x: hidden; }
+.foot, .marquee { overflow: hidden; }
+[data-baseweb="tab-panel"] { overflow: visible; }
+.verdict, .input-frame, .feed, .src-table-wrap { overflow-x: auto; }
+
+/* Stabilise hover — no layout shift on tab hover */
+body .stTabs [data-baseweb="tab"]:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+body .stTabs [data-baseweb="tab"]:focus,
+body .stTabs [data-baseweb="tab"]:focus-visible {
+  outline: none !important;
+}
+
+/* Selection */
+::selection { background: var(--vermil); color: var(--bone); }
+
+/* Streamlit's warning/info boxes — bone-on-bone harmony */
+[data-testid="stAlert"] {
+  border-radius: 0 !important;
+  border: 1px solid var(--ink) !important;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 12px !important;
+  letter-spacing: 0.12em !important;
+}
+[data-testid="stAlert"] p { color: var(--ink) !important; }
+
+/* Flagship banner inside the active TEXT tab */
+.flagship-banner {
+  border: 1px solid var(--ink);
+  border-top: none;
+  background: var(--ink);
+  color: var(--bone);
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.flagship-banner .l b { color: var(--vermil); font-weight: 400; }
+.flagship-banner .r { color: var(--bone); opacity: 0.6; }
+
+/* The big RUN button when sitting outside the .analyser-frame */
+body .stButton > button {
+  background: var(--vermil) !important;
+  color: var(--ink) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.24em !important;
+  text-transform: uppercase !important;
+  border: 1px solid var(--ink) !important;
+  border-radius: 0 !important;
+  padding: 20px 32px !important;
+  width: 100% !important;
+  transition: transform 0.15s, box-shadow 0.15s !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+.tabs-shell .stButton > button:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 4px 4px 0 var(--ink) !important;
+}
+.tabs-shell .stButton > button:active {
+  transform: translate(0, 0) !important;
+  box-shadow: none !important;
+}
+
+/* Compact-hero: smaller padding so tabs are visible above the fold. */
+.hero.compact { padding: 38px 32px 36px; }
+.hero.compact .hero-headline { font-size: clamp(52px, 8.5vw, 132px); }
+.hero.compact .hero-foot { margin-top: 28px; padding-top: 18px; }
+.hero.compact .hero-meta { gap: 14px; }
+.hero.compact .hero-meta .stamp { padding: 14px 16px; }
+.hero.compact .hero-meta .stamp .body { font-size: 17px; }
+
+/* Verdict block — when rendered inside a tab, give it breathing room */
+.verdict {
+  margin: 28px auto 0 auto !important;
+  max-width: 1080px;
+  box-sizing: border-box;
+}
+.emo-wrap {
+  max-width: 1080px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box;
+}
+
+/* Strip Streamlit's default container padding inside tab panels */
+[data-baseweb="tab-panel"] [data-testid="element-container"] {
+  margin-bottom: 8px;
+}
+
+/* Selectbox in the Sources section: keep dark-on-cream */
+[data-testid="stSelectbox"] > label {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  color: var(--dim) !important;
+}
+
+/* Expander (FAQ) — ink text on cream */
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] summary p {
+  color: var(--ink) !important;
+}
+[data-testid="stExpander"] summary svg { color: var(--vermil) !important; }
+
+/* =====================================================================
+   25. VISIBILITY FIXES — captions, spinner text, vs-acc on dark card
+   ===================================================================== */
+
+/* st.caption was rendering white on cream — pin to dim ink */
+[data-testid="stCaptionContainer"],
+[data-testid="stCaptionContainer"] *,
+.stCaption, .stCaption * {
+  color: var(--dim) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.14em !important;
+}
+
+/* st.spinner label ("// analysing the seam…") — pin to ink.
+   The spinning ring uses border-top-color (set elsewhere) so colour: ink is safe. */
+[data-testid="stSpinner"],
+[data-testid="stSpinner"] *,
+.stSpinner > div + div,
+.stSpinner p,
+.stSpinner span {
+  color: var(--ink) !important;
+}
+
+/* The right-hand .vs-card (ink background) had .vs-acc forced to ink by the
+   blanket override on line 1287 — black-on-black. Restore vermilion. */
+.vs-card.right .vs-acc {
+  color: var(--vermil) !important;
+}
+
+/* =====================================================================
+   26. EVERYTHING-ELSE HERO — struck-through title + About-us heading
+   ===================================================================== */
+.everything-hero {
+  max-width: 1080px;
+  margin: 0 auto 8px auto;
+  padding: 40px 32px 16px;
+  box-sizing: border-box;
+}
+.eh-eyebrow { margin-bottom: 20px; }
+.eh-title {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(52px, 7.4vw, 116px);
+  line-height: 0.95;
+  letter-spacing: -0.022em;
+  margin: 0 0 18px 0;
+  color: var(--ink) !important;
+}
+.eh-title .strike {
+  position: relative;
+  display: inline-block;
+}
+.eh-title .strike::after {
+  content: '';
+  position: absolute;
+  left: -2px; right: -2px; top: 52%;
+  height: 5px;
+  background: var(--vermil);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: strike-eh 0.9s 0.35s cubic-bezier(.2,.8,.2,1) forwards;
+}
+.eh-title em {
+  font-style: italic;
+  color: var(--vermil) !important;
+}
+@keyframes strike-eh { to { transform: scaleX(1); } }
+.eh-sub {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(32px, 4.2vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.012em;
+  margin: 4px 0 18px 0;
+  color: var(--ink) !important;
+}
+.eh-sub em {
+  font-style: italic;
+  color: var(--vermil) !important;
+}
+.eh-lede {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ink) !important;
+  max-width: 720px;
+  margin: 0 0 8px 0;
+}

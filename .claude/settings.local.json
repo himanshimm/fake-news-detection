@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(cd \"C:\\\\Users\\\\himan\\\\Desktop\\\\project_6\\\\fake-news-detector\"; \\(Get-Content app/app.py\\).Count; \\(Get-Content src/translator.py\\).Count; \\(Get-Content src/scam_detector.py\\).Count)",
+      "Bash(python src/autopsy.py)",
+      "Bash(python src/emotion.py)",
+      "Bash(python src/who_benefits.py)",
+      "Bash(python src/whatsapp_decode.py)",
+      "Bash(python -c ' *)",
+      "Bash(ls \"C:\\\\Users\\\\himan\\\\Desktop\\\\project_6\\\\fake-news-detector\\\\models\")",
+      "Bash(ls \"C:\\\\Users\\\\himan\\\\Desktop\\\\project_6\\\\fake-news-detector\\\\models\\\\fine_tuned\")"
+    ]
+  }
+}

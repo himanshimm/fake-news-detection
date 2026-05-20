@@ -1,0 +1,69 @@
+{
+  "_doc": "Curated entity → affiliation map for the 'Who Benefits?' engine. Keys are case-insensitive substrings; longer keys match first. Extend freely. Not an endorsement; affiliations reflect publicly reported leanings as of 2025.",
+
+  "parties_india": {
+    "bjp":                 {"side": "BJP-led NDA",     "leans": "right",         "funders": "corporate donations, electoral bonds (pre-2024)"},
+    "bharatiya janata":    {"side": "BJP-led NDA",     "leans": "right",         "funders": "corporate donations, electoral bonds (pre-2024)"},
+    "congress":            {"side": "INC-led UPA",     "leans": "centre-left",   "funders": "corporate donations, party trusts"},
+    "indian national":     {"side": "INC-led UPA",     "leans": "centre-left",   "funders": "corporate donations, party trusts"},
+    "aap":                 {"side": "Aam Aadmi Party", "leans": "centre",        "funders": "small donations, crowdfunded"},
+    "aam aadmi":           {"side": "Aam Aadmi Party", "leans": "centre",        "funders": "small donations, crowdfunded"},
+    "trinamool":           {"side": "TMC",             "leans": "centre",        "funders": "regional corporate base"},
+    "tmc":                 {"side": "TMC",             "leans": "centre",        "funders": "regional corporate base"},
+    "shiv sena":           {"side": "Shiv Sena",       "leans": "right",         "funders": "Maharashtra industrial base"},
+    "dmk":                 {"side": "DMK",             "leans": "centre-left",   "funders": "Tamil business networks"},
+    "aiadmk":              {"side": "AIADMK",          "leans": "centre-right",  "funders": "Tamil business networks"}
+  },
+
+  "leaders_india": {
+    "modi":               {"affiliation": "BJP",       "side": "BJP-led NDA"},
+    "narendra modi":      {"affiliation": "BJP",       "side": "BJP-led NDA"},
+    "amit shah":          {"affiliation": "BJP",       "side": "BJP-led NDA"},
+    "yogi":               {"affiliation": "BJP",       "side": "BJP-led NDA"},
+    "rahul gandhi":       {"affiliation": "Congress",  "side": "INC-led UPA"},
+    "priyanka gandhi":    {"affiliation": "Congress",  "side": "INC-led UPA"},
+    "mallikarjun kharge": {"affiliation": "Congress",  "side": "INC-led UPA"},
+    "kejriwal":           {"affiliation": "AAP",       "side": "Aam Aadmi Party"},
+    "arvind kejriwal":    {"affiliation": "AAP",       "side": "Aam Aadmi Party"},
+    "mamata":             {"affiliation": "TMC",       "side": "TMC"},
+    "mamata banerjee":    {"affiliation": "TMC",       "side": "TMC"},
+    "stalin":             {"affiliation": "DMK",       "side": "DMK"},
+    "m k stalin":         {"affiliation": "DMK",       "side": "DMK"}
+  },
+
+  "parties_us": {
+    "republican":         {"side": "Republican Party", "leans": "right",        "funders": "PACs, corporate donors"},
+    "gop":                {"side": "Republican Party", "leans": "right",        "funders": "PACs, corporate donors"},
+    "democrat":           {"side": "Democratic Party", "leans": "centre-left",  "funders": "PACs, small donors, corporate donors"},
+    "democratic party":   {"side": "Democratic Party", "leans": "centre-left",  "funders": "PACs, small donors, corporate donors"}
+  },
+
+  "leaders_us": {
+    "trump":              {"affiliation": "Republican", "side": "Republican Party"},
+    "donald trump":       {"affiliation": "Republican", "side": "Republican Party"},
+    "biden":              {"affiliation": "Democratic", "side": "Democratic Party"},
+    "joe biden":          {"affiliation": "Democratic", "side": "Democratic Party"},
+    "harris":             {"affiliation": "Democratic", "side": "Democratic Party"},
+    "obama":              {"affiliation": "Democratic", "side": "Democratic Party"}
+  },
+
+  "media_owners": {
+    "republic":           {"owner": "ARG Outlier Media",        "side": "Republican (IN, right-aligned)"},
+    "zee news":           {"owner": "Essel Group",              "side": "right-aligned"},
+    "ndtv":               {"owner": "Adani Group (since 2022)", "side": "corporate"},
+    "times of india":     {"owner": "Bennett, Coleman & Co.",   "side": "corporate"},
+    "the wire":           {"owner": "Foundation for Independent Journalism", "side": "left-aligned"},
+    "altnews":            {"owner": "Pravda Media Foundation",  "side": "independent / fact-check"},
+    "fox news":           {"owner": "Fox Corporation (Murdoch)", "side": "right-aligned"},
+    "cnn":                {"owner": "Warner Bros. Discovery",   "side": "corporate / centre-left"},
+    "msnbc":              {"owner": "NBCUniversal (Comcast)",   "side": "centre-left"}
+  },
+
+  "corporates": {
+    "adani":              {"sector": "infrastructure, energy, media", "side": "BJP-aligned (publicly reported)"},
+    "ambani":             {"sector": "telecom, retail, energy",       "side": "politically agnostic, BJP-aligned"},
+    "reliance":           {"sector": "telecom, retail, energy",       "side": "politically agnostic, BJP-aligned"},
+    "tata":               {"sector": "conglomerate",                   "side": "politically agnostic"},
+    "vedanta":            {"sector": "mining, metals",                 "side": "BJP-aligned (publicly reported)"}
+  }
+}

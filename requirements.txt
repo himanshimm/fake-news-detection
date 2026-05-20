@@ -1,0 +1,14 @@
+# Python 3.13 compatible. Loose lower bounds — pip picks the latest compatible.
+streamlit>=1.40.0
+transformers>=4.45.0
+torch>=2.6.0
+pandas>=2.2.0
+numpy>=2.0.0
+scikit-learn>=1.5.0
+deep-translator>=1.11.4
+requests>=2.31.0
+python-dotenv>=1.0.1
+matplotlib>=3.8.3
+seaborn>=0.13.2
+pytesseract>=0.3.10
+Pillow>=10.2.0
