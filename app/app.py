@@ -1215,7 +1215,7 @@ with page_else:
         '<div class="num">§ 00 · <b>About</b></div>'
         '<div class="tag">The masthead · ethos · build</div>'
         '</div>'
-        '<h1 class="eh-title"><span class="strike">Real or <em>Fabricated</em></span></h1>'
+        '<h1 class="eh-title">Real or <span class="strike"><em>Fabricated</em></span></h1>'
         '<h2 class="eh-sub">About <em>us</em>.</h2>'
         '<p class="eh-lede">A small, open tool against a large, networked problem. '
         'DeCypher reads the claim, flags the rhetoric, surfaces who benefits — '
@@ -1384,8 +1384,8 @@ with page_else:
     for i, (q, a) in enumerate(FAQ_ITEMS):
         with st.expander(f"{(i+1):02d}   ·   {q}"):
             st.markdown(
-                f'<div style="font-family:Space Grotesk,sans-serif;font-size:15px;'
-                f'line-height:1.7;color:#0a0a0a;">{_esc(a)}</div>',
+                f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:13px;'
+                f'letter-spacing:0.04em;line-height:1.7;color:#0a0a0a;">{_esc(a)}</div>',
                 unsafe_allow_html=True,
             )
 
